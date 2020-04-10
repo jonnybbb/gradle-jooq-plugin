@@ -28,11 +28,13 @@ class JooqConfiguration implements Named {
     final String name
     final SourceSet sourceSet
     final Configuration configuration
+    final Closure customNormalizationCommand
 
-    JooqConfiguration(String name, SourceSet sourceSet, Configuration configuration) {
+    JooqConfiguration(String name, SourceSet sourceSet, Configuration configuration, Closure customNormalizationCommand) {
         this.name = name
         this.sourceSet = sourceSet
         this.configuration = configuration
+        this.customNormalizationCommand = customNormalizationCommand
     }
 
     def getJooqTaskName() {

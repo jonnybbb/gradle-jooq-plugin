@@ -106,6 +106,7 @@ class JooqPlugin implements Plugin<Project> {
         jooqTask.description = "Generates the jOOQ sources from the '$jooqConfiguration.name' jOOQ configuration."
         jooqTask.group = "jOOQ"
         jooqTask.configuration = jooqConfiguration.configuration
+        jooqTask.customNormalizationCommand = jooqConfiguration.customNormalizationCommand
         jooqTask.jooqClasspath = jooqRuntime
     }
 
@@ -113,6 +114,14 @@ class JooqPlugin implements Plugin<Project> {
      * Configures a sensible default output directory.
      */
     private void configureDefaultOutput(JooqConfiguration jooqConfiguration) {
+        String outputDirectoryName = "${project.buildDir}/generated-src/jooq/$jooqConfiguration.name"
+        jooqConfiguration.configuration.withGenerator(new Generator().withTarget(new Target().withDirectory(outputDirectoryName)))
+    }
+
+    /**
+     * Configures a normalization of the configuration for cacheability.
+     */
+    private void configureOutputNormalization(JooqConfiguration jooqConfiguration) {
         String outputDirectoryName = "${project.buildDir}/generated-src/jooq/$jooqConfiguration.name"
         jooqConfiguration.configuration.withGenerator(new Generator().withTarget(new Target().withDirectory(outputDirectoryName)))
     }
